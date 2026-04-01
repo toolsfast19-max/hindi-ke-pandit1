@@ -1,0 +1,88 @@
+/* ========== RESPONSIVE DESIGN ========== */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block;
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+    
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background: white;
+        flex-direction: column;
+        padding: 1rem;
+        gap: 1rem;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        z-index: 100;
+    }
+    
+    .nav-links.active {
+        display: flex;
+    }
+    
+    .lang-nav {
+        justify-content: center;
+        margin-top: 0.5rem;
+    }
+    
+    .hero h1 {
+        font-size: 1.8rem;
+    }
+    
+    .hero {
+        padding: 2rem;
+    }
+    
+    .hero div {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .hero .btn {
+        width: 100%;
+        margin: 5px 0 !important;
+    }
+    
+    .grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .progress-steps {
+        flex-wrap: wrap;
+        gap: 10px;
+        border-radius: 12px;
+    }
+    
+    .step {
+        font-size: 12px;
+        padding: 5px 10px;
+    }
+    
+    .btn-group {
+        flex-direction: column;
+    }
+    
+    .notice-text {
+        animation: scrollNotice 10s linear infinite;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-title {
+        font-size: 1.5rem;
+    }
+    
+    .card {
+        padding: 1.5rem;
+    }
+    
+    .form-container {
+        padding: 1.5rem;
+    }
+}
