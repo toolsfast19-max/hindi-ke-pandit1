@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>श्रीनाथ चाणक्य | प्रीमियम कोचिंग सेंटर</title>
+    
+    <!-- External CSS Files -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Chart.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+    <style>
+        /* Additional Styles for Online Test Button */
+        .online-test-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: 15px;
+        }
+        
+        .online-test-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .online-test-btn i {
+            font-size: 18px;
+        }
+        
+        /* Navbar Improvement */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .logo h1 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin: 0;
+        }
+        
+        .logo p {
+            font-size: 0.8rem;
+            color: #666;
+            margin: 0;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+            margin: 0;
+            padding: 0;
+            align-items: center;
+        }
+        
+        .nav-links li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+        
+        .nav-links li a:hover {
+            color: var(--primary);
+        }
+        
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Notice Board Improvement */
+        .notice-board {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            padding: 10px;
+            overflow: hidden;
+            white-space: nowrap;
+            border-bottom: 2px solid #f59e0b;
+        }
+        
+        .notice-text {
+            display: inline-block;
+            animation: scrollNotice 20s linear infinite;
+            font-weight: 500;
+        }
+        
+        @keyframes scrollNotice {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .online-test-btn {
+                margin: 10px 0;
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .notice-text {
+                animation: scrollNotice 10s linear infinite;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Floating Elements -->
+<a href="https://wa.me/919881296727?text=Hi!%20I%20want%20to%20know%20about%20coaching" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+<a href="#" id="stickyEnrollBtn" class="enroll-sticky"><i class="fas fa-graduation-cap"></i> Enroll Now</a>
+
+<!-- Language Switcher -->
+<div class="lang-switcher">
+    <button class="lang-btn active" data-lang="en">🇬🇧 English</button>
+    <button class="lang-btn" data-lang="mr">🇮🇳 मराठी</button>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="logo">
+        <h1>श्रीनाथ चाणक्य</h1>
+        <p>कोचिंग क्लासेस</p>
+    </div>
+    <div class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></div>
+    <ul class="nav-links" id="navLinks">
+        <li><a data-page="home">🏠 Home</a></li>
+        <li><a data-page="about">📖 About</a></li>
+        <li><a data-page="courses">📚 Courses</a></li>
+        <li><a data-page="dashboard">📊 Dashboard</a></li>
+        <li><a data-page="registration">📝 Registration</a></li>
+        <li><a data-page="contact">📞 Contact</a></li>
+        <li>
+            <button class="online-test-btn" onclick="window.open('login.php', '_blank')">
+                <i class="fas fa-laptop-code"></i> Online Test
+            </button>
+        </li>
+    </ul>
+</nav>
+
+<!-- Notice Board -->
+<div class="notice-board">
+    <div class="notice-text">
+        📢 New Batch Starting from 1st April 2025 | 🎯 Scholarship Test on 25th March - Register Now! | 🏆 JEE/NEET Special Classes | 📅 Holi Holiday: 26th March | 🔥 Free Demo Class Available! | 🖥️ Online Test Series Started - Register Now!
+    </div>
+</div>
+
+<!-- Page Container -->
+<div class="page-container">
+    <!-- Home Page -->
+    <div id="home-page" class="page active-page">
+        <div class="hero">
+            <h1 data-key="hero_title">सफलता की ओर <span style="color: #fbbf24;">सुनहरा कदम</span></h1>
+            <p data-key="hero_sub">ससाणे सर (9881296727) | शिंदे सर (9075238958)</p>
+            <p data-key="hero_medium">CBSE | English | Semi | Marathi | 5वी ते 10वी सर्व माध्यम</p>
+            <div style="margin-top: 2rem;">
+                <button class="btn btn-primary" data-page="registration"><i class="fas fa-user-plus"></i> <span data-key="btn_register">Online Registration</span></button>
+                <button class="btn btn-outline" data-page="dashboard" style="margin-left: 1rem;"><i class="fas fa-chart-line"></i> <span data-key="btn_dashboard">Student Dashboard</span></button>
+                <button class="btn btn-outline" onclick="window.open('login.php', '_blank')" style="margin-left: 1rem; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none;">
+                    <i class="fas fa-laptop-code"></i> Online Test
+                </button>
+            </div>
+        </div>
+        
+        <h2 class="page-title" data-key="features_title">हमारी <span>विशेषताएँ</span></h2>
+        <div class="grid">
+            <div class="card"><i class="fas fa-chalkboard-user"></i><h3 data-key="feat1_title">10+ Years Experience</h3><p data-key="feat1_desc">शिक्षा के क्षेत्र में दशकों का अनुभव</p></div>
+            <div class="card"><i class="fas fa-trophy"></i><h3 data-key="feat2_title">उत्कृष्ट परिणाम</h3><p data-key="feat2_desc">हर साल 90%+ विद्यार्थी मेरिट में</p></div>
+            <div class="card"><i class="fas fa-users"></i><h3 data-key="feat3_title">व्यक्तिगत ध्यान</h3><p data-key="feat3_desc">सीमित बैच, हर छात्र पर फोकस</p></div>
+            <div class="card"><i class="fas fa-language"></i><h3 data-key="feat4_title">सभी माध्यम</h3><p data-key="feat4_desc">CBSE, English, Semi, Marathi</p></div>
+        </div>
+    </div>
+
+    <!-- About Page -->
+    <div id="about-page" class="page">
+        <h2 class="page-title"><span data-key="about_title">हमारे बारे में</span></h2>
+        <div class="grid">
+            <div class="card">
+                <i class="fas fa-bullseye"></i>
+                <h3 data-key="mission_title">हमारा मिशन</h3>
+                <p data-key="mission_desc">हर विद्यार्थी को उसकी अधिकतम क्षमता तक पहुँचाना। गुणवत्तापूर्ण शिक्षा प्रदान करना जो जीवन भर काम आए।</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-eye"></i>
+                <h3 data-key="vision_title">हमारा विजन</h3>
+                <p data-key="vision_desc">शिक्षा को सरल, प्रभावी और परिणाम-उन्मुख बनाना। हर छात्र को सफलता की ऊंचाइयों तक पहुंचाना।</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-heart"></i>
+                <h3 data-key="values_title">हमारे मूल्य</h3>
+                <p data-key="values_desc">समर्पण, ईमानदारी, उत्कृष्टता। हम विद्यार्थियों के भविष्य को प्राथमिकता देते हैं।</p>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 2rem; background: linear-gradient(135deg, #e0e7ff, #c7d2fe); padding: 2rem; border-radius: 24px;">
+            <h3 data-key="teachers_title">हमारे प्रमुख शिक्षक</h3>
+            <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-top: 1rem;">
+                <div><i class="fas fa-user-graduate" style="font-size: 2rem; color: var(--primary);"></i><h4>ससाणे सर</h4><p>गणित एवं विज्ञान</p><p>📞 9881296727</p></div>
+                <div><i class="fas fa-chalkboard" style="font-size: 2rem; color: var(--primary);"></i><h4>शिंदे सर</h4><p>भाषा एवं सामाजिक विज्ञान</p><p>📞 9075238958</p></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Courses Page -->
+    <div id="courses-page" class="page">
+        <h2 class="page-title"><span data-key="courses_title">हमारे अभ्यासक्रम</span></h2>
+        <div class="grid">
+            <div class="card"><i class="fas fa-book-open"></i><h3 data-key="course1">5वी - 8वी फाउंडेशन</h3><p data-key="course1_desc">मजबूत नींव, कॉन्सेप्ट क्लियरिटी, नियमित टेस्ट</p></div>
+            <div class="card"><i class="fas fa-flask"></i><h3 data-key="course2">9वी - 10वी बोर्ड प्रिपरेशन</h3><p data-key="course2_desc">पूर्ण सिलेबस, रिवीजन, मॉक टेस्ट, पिछले साल के पेपर</p></div>
+            <div class="card"><i class="fas fa-chart-line"></i><h3 data-key="course3">स्पर्धा परीक्षा</h3><p data-key="course3_desc">JEE/NEET फाउंडेशन, ओलंपियाड, MHT-CET तैयारी</p></div>
+            <div class="card"><i class="fas fa-laptop"></i><h3 data-key="course4">ऑनलाइन क्लासेस</h3><p data-key="course4_desc">लाइव्ह जूम क्लास, रिकॉर्डेड वीडियो, डाउट सपोर्ट</p></div>
+        </div>
+        <div style="text-align: center; margin-top: 2rem;">
+            <button class="btn btn-primary" data-page="registration"><i class="fas fa-user-plus"></i> <span data-key="enroll_now">अभी एडमिशन लें</span></button>
+            <button class="btn btn-outline" onclick="window.open('login.php', '_blank')" style="margin-left: 1rem; background: linear-gradient(135deg, #667eea, #764ba2); color: white;">
+                <i class="fas fa-laptop-code"></i> Online Test
+            </button>
+        </div>
+    </div>
+
+    <!-- Dashboard Page -->
+    <div id="dashboard-page" class="page">
+        <h2 class="page-title"><span data-key="dashboard_title">Student Dashboard</span></h2>
+        <div class="dashboard">
+            <div class="dashboard-tabs">
+                <button class="tab-btn active" data-tab="login"><span data-key="tab_login">Login</span></button>
+                <button class="tab-btn" data-tab="fees"><span data-key="tab_fees">Fee Status</span></button>
+                <button class="tab-btn" data-tab="results"><span data-key="tab_results">Test Results</span></button>
+                <button class="tab-btn" data-tab="material"><span data-key="tab_material">Study Material</span></button>
+                <button class="tab-btn" data-tab="online-test" onclick="window.open('login.php', '_blank')"><span data-key="tab_online_test">📝 Online Test</span></button>
+            </div>
+            
+            <div id="login-pane" class="tab-pane active">
+                <form id="loginForm">
+                    <input type="text" id="loginId" placeholder="Student ID / Mobile" required>
+                    <input type="password" id="loginPassword" placeholder="Password" required>
+                    <button type="submit" class="login-submit-btn">Login</button>
+                </form>
+                <div id="dashboardInfo" style="display:none; margin-top:1rem; background:#e6f7e6; padding:1rem; border-radius:12px;">
+                    <h4>Welcome, <span id="displayName"></span>!</h4>
+                    <p>Student ID: <strong id="displayId"></strong></p>
+                    <button id="logoutBtn" class="logout-btn">Logout</button>
+                </div>
+            </div>
+            
+            <div id="fees-pane" class="tab-pane">
+                <h3 data-key="fee_title">Fee Details</h3>
+                <div id="feeDetails">Please login to view fee status</div>
+            </div>
+            
+            <div id="results-pane" class="tab-pane">
+                <h3 data-key="results_title">Test Results</h3>
+                <canvas id="marksChart" width="400" height="200"></canvas>
+                <div id="marksList"></div>
+            </div>
+            
+            <div id="material-pane" class="tab-pane">
+                <h3 data-key="material_title">📚 Study Material</h3>
+                <ul style="list-style:none;">
+                    <li><i class="fas fa-file-pdf"></i> <a href="#">Mathematics Notes PDF</a></li>
+                    <li><i class="fas fa-file-pdf"></i> <a href="#">Science Sample Paper 2025</a></li>
+                    <li><i class="fas fa-video"></i> <a href="#">Recorded Lecture: Algebra</a></li>
+                    <li><i class="fas fa-download"></i> <a href="#">Previous Year Question Papers</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Registration Page -->
+    <div id="registration-page" class="page">
+        <h2 class="page-title"><span data-key="reg_title">📝 Online Registration</span></h2>
+        <div class="form-container">
+            <form id="registrationForm">
+                <input type="text" id="regName" placeholder="Student Full Name *" required>
+                <input type="tel" id="regPhone" placeholder="Mobile Number *" required>
+                <input type="email" id="regEmail" placeholder="Email ID">
+                <select id="regClass" required>
+                    <option value="">Select Class</option>
+                    <option>5th</option><option>6th</option><option>7th</option><option>8th</option><option>9th</option><option>10th</option>
+                </select>
+                <select id="regMedium">
+                    <option>CBSE Board</option><option>English Medium</option><option>Semi English</option><option>Marathi Medium</option>
+                </select>
+                <select id="regBatch">
+                    <option>Morning (7-9 AM)</option><option>Evening (4-6 PM)</option><option>Weekend Batch</option>
+                </select>
+                <button type="submit" class="register-btn">Register Now →</button>
+            </form>
+            <p style="text-align:center; margin-top:1rem;">✅ Free Demo Class | ✅ Scholarship Available | ✅ Easy Fee Payment</p>
+        </div>
+    </div>
+
+    <!-- Contact Page -->
+    <div id="contact-page" class="page">
+        <h2 class="page-title"><span data-key="contact_title">Contact Us</span></h2>
+        <div class="grid">
+            <div class="card"><i class="fas fa-phone-alt"></i><h3>Call Us</h3><p>ससाणे सर: 9881296727</p><p>शिंदे सर: 9075238958</p></div>
+            <div class="card"><i class="fas fa-envelope"></i><h3>Email</h3><p>info@chanakyacoaching.com</p></div>
+            <div class="card"><i class="fas fa-map-marker-alt"></i><h3>Address</h3><p>पुणे, महाराष्ट्र</p>
+                <iframe src="https://maps.google.com/maps?q=pune&t=&z=13&ie=UTF8&iwloc=&output=embed" width="100%" height="150" style="border:0; border-radius:12px; margin-top:10px;"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>© 2025 श्रीनाथ चाणक्य कोचिंग क्लासेस | Excellence in Education</p>
+    <p><i class="fas fa-phone"></i> 9881296727 | 9075238958 | <i class="fas fa-laptop-code"></i> Online Test Available</p>
+</footer>
+
+<!-- External JavaScript File (Must be at the end of body) -->
+<script src="script.js"></script>
+
+<script>
+    // Mobile menu toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+    
+    if (menuToggle) {
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+    }
+    
+    // Page navigation
+    document.querySelectorAll('[data-page]').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            const pageId = this.getAttribute('data-page') + '-page';
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active-page');
+            });
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) targetPage.classList.add('active-page');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // Close mobile menu
+            if (navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+            }
+        });
+    });
+</script>
+</body>
+</html>
