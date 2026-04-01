@@ -3,387 +3,418 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>श्रीनाथ चाणक्य | प्रीमियम कोचिंग सेंटर</title>
+    <title>Shrinath Chanakya | Premium Coaching Center</title>
     
-    <!-- External CSS Files -->
-    <link rel="stylesheet" href="style.css">
-    
-    <!-- Google Fonts -->
+    <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
-    <!-- Chart.js Library -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    
-    <style>
-        /* Additional Styles for Online Test Button */
-        .online-test-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 50px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-left: 15px;
-        }
-        
-        .online-test-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-        
-        .online-test-btn i {
-            font-size: 18px;
-        }
-        
-        /* Navbar Improvement */
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 2rem;
-            background: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        
-        .logo h1 {
-            font-size: 1.5rem;
-            color: var(--primary);
-            margin: 0;
-        }
-        
-        .logo p {
-            font-size: 0.8rem;
-            color: #666;
-            margin: 0;
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 1.5rem;
-            margin: 0;
-            padding: 0;
-            align-items: center;
-        }
-        
-        .nav-links li a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: color 0.3s;
-            cursor: pointer;
-        }
-        
-        .nav-links li a:hover {
-            color: var(--primary);
-        }
-        
-        .menu-toggle {
-            display: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-        
-        /* Notice Board Improvement */
-        .notice-board {
-            background: linear-gradient(135deg, #fef3c7, #fde68a);
-            padding: 10px;
-            overflow: hidden;
-            white-space: nowrap;
-            border-bottom: 2px solid #f59e0b;
-        }
-        
-        .notice-text {
-            display: inline-block;
-            animation: scrollNotice 20s linear infinite;
-            font-weight: 500;
-        }
-        
-        @keyframes scrollNotice {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .menu-toggle {
-                display: block;
-            }
-            
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 70px;
-                left: 0;
-                right: 0;
-                background: white;
-                flex-direction: column;
-                padding: 1rem;
-                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            }
-            
-            .nav-links.active {
-                display: flex;
-            }
-            
-            .online-test-btn {
-                margin: 10px 0;
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .notice-text {
-                animation: scrollNotice 10s linear infinite;
-            }
-        }
-    </style>
 </head>
 <body>
 
-<!-- Floating Elements -->
 <a href="https://wa.me/919881296727?text=Hi!%20I%20want%20to%20know%20about%20coaching" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
-<a href="#" id="stickyEnrollBtn" class="enroll-sticky"><i class="fas fa-graduation-cap"></i> Enroll Now</a>
+<a href="#" id="stickyEnrollBtn" class="enroll-sticky"><i class="fas fa-graduation-cap"></i> <span id="stickyEnrollText">Enroll Now</span></a>
 
-<!-- Language Switcher -->
-<div class="lang-switcher">
-    <button class="lang-btn active" data-lang="en">🇬🇧 English</button>
-    <button class="lang-btn" data-lang="mr">🇮🇳 मराठी</button>
-</div>
-
-<!-- Navbar -->
+<!-- Navbar - Minimalist Border Style -->
 <nav class="navbar">
     <div class="logo">
-        <h1>श्रीनाथ चाणक्य</h1>
-        <p>कोचिंग क्लासेस</p>
+        <a href="#" onclick="showPage('home'); return false;">
+            <img src="assets/images/logo.png" alt="Shrinath Chanakya" class="logo-img" onerror="this.style.display='none'">
+            <div class="logo-text">
+                <h1 id="logoTitle">Shrinath Chanakya</h1>
+                <p id="logoSubtitle">Coaching Classes</p>
+            </div>
+        </a>
     </div>
     <div class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></div>
     <ul class="nav-links" id="navLinks">
-        <li><a data-page="home">🏠 Home</a></li>
-        <li><a data-page="about">📖 About</a></li>
-        <li><a data-page="courses">📚 Courses</a></li>
-        <li><a data-page="dashboard">📊 Dashboard</a></li>
-        <li><a data-page="registration">📝 Registration</a></li>
-        <li><a data-page="contact">📞 Contact</a></li>
-        <li>
-            <button class="online-test-btn" onclick="window.open('login.php', '_blank')">
-                <i class="fas fa-laptop-code"></i> Online Test
-            </button>
+        <li><a data-page="home" id="navHome">🏠 Home</a></li>
+        <li><a data-page="about" id="navAbout">📖 About</a></li>
+        <li><a data-page="courses" id="navCourses">📚 Courses</a></li>
+        <li><a data-page="dashboard" id="navDashboard">📊 Dashboard</a></li>
+        <li><a data-page="registration" id="navRegistration">📝 Registration</a></li>
+        <li><a data-page="contact" id="navContact">📞 Contact</a></li>
+        <li><button class="btn-admin" onclick="window.open('../admin/admin_login.php', '_blank')"><i class="fas fa-user-shield"></i> <span id="adminText">Admin</span></button></li>
+        <li class="lang-nav">
+            <button class="lang-btn active" data-lang="en">🇬🇧 EN</button>
+            <button class="lang-btn" data-lang="mr">🇮🇳 MR</button>
         </li>
     </ul>
 </nav>
 
 <!-- Notice Board -->
 <div class="notice-board">
-    <div class="notice-text">
-        📢 New Batch Starting from 1st April 2025 | 🎯 Scholarship Test on 25th March - Register Now! | 🏆 JEE/NEET Special Classes | 📅 Holi Holiday: 26th March | 🔥 Free Demo Class Available! | 🖥️ Online Test Series Started - Register Now!
-    </div>
+    <div class="notice-text" id="noticeText">📢 New Batch Starting from 1st April 2025 | 🎯 Scholarship Test on 25th March | 🏆 JEE/NEET Special Classes | 🖥️ Online Test Series Started!</div>
 </div>
 
-<!-- Page Container -->
+
 <div class="page-container">
-    <!-- Home Page -->
-    <div id="home-page" class="page active-page">
-        <div class="hero">
-            <h1 data-key="hero_title">सफलता की ओर <span style="color: #fbbf24;">सुनहरा कदम</span></h1>
-            <p data-key="hero_sub">ससाणे सर (9881296727) | शिंदे सर (9075238958)</p>
-            <p data-key="hero_medium">CBSE | English | Semi | Marathi | 5वी ते 10वी सर्व माध्यम</p>
-            <div style="margin-top: 2rem;">
-                <button class="btn btn-primary" data-page="registration"><i class="fas fa-user-plus"></i> <span data-key="btn_register">Online Registration</span></button>
-                <button class="btn btn-outline" data-page="dashboard" style="margin-left: 1rem;"><i class="fas fa-chart-line"></i> <span data-key="btn_dashboard">Student Dashboard</span></button>
-                <button class="btn btn-outline" onclick="window.open('login.php', '_blank')" style="margin-left: 1rem; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none;">
-                    <i class="fas fa-laptop-code"></i> Online Test
-                </button>
-            </div>
-        </div>
-        
-        <h2 class="page-title" data-key="features_title">हमारी <span>विशेषताएँ</span></h2>
-        <div class="grid">
-            <div class="card"><i class="fas fa-chalkboard-user"></i><h3 data-key="feat1_title">10+ Years Experience</h3><p data-key="feat1_desc">शिक्षा के क्षेत्र में दशकों का अनुभव</p></div>
-            <div class="card"><i class="fas fa-trophy"></i><h3 data-key="feat2_title">उत्कृष्ट परिणाम</h3><p data-key="feat2_desc">हर साल 90%+ विद्यार्थी मेरिट में</p></div>
-            <div class="card"><i class="fas fa-users"></i><h3 data-key="feat3_title">व्यक्तिगत ध्यान</h3><p data-key="feat3_desc">सीमित बैच, हर छात्र पर फोकस</p></div>
-            <div class="card"><i class="fas fa-language"></i><h3 data-key="feat4_title">सभी माध्यम</h3><p data-key="feat4_desc">CBSE, English, Semi, Marathi</p></div>
-        </div>
-    </div>
-
-    <!-- About Page -->
-    <div id="about-page" class="page">
-        <h2 class="page-title"><span data-key="about_title">हमारे बारे में</span></h2>
-        <div class="grid">
-            <div class="card">
-                <i class="fas fa-bullseye"></i>
-                <h3 data-key="mission_title">हमारा मिशन</h3>
-                <p data-key="mission_desc">हर विद्यार्थी को उसकी अधिकतम क्षमता तक पहुँचाना। गुणवत्तापूर्ण शिक्षा प्रदान करना जो जीवन भर काम आए।</p>
-            </div>
-            <div class="card">
-                <i class="fas fa-eye"></i>
-                <h3 data-key="vision_title">हमारा विजन</h3>
-                <p data-key="vision_desc">शिक्षा को सरल, प्रभावी और परिणाम-उन्मुख बनाना। हर छात्र को सफलता की ऊंचाइयों तक पहुंचाना।</p>
-            </div>
-            <div class="card">
-                <i class="fas fa-heart"></i>
-                <h3 data-key="values_title">हमारे मूल्य</h3>
-                <p data-key="values_desc">समर्पण, ईमानदारी, उत्कृष्टता। हम विद्यार्थियों के भविष्य को प्राथमिकता देते हैं।</p>
-            </div>
-        </div>
-        <div style="text-align: center; margin-top: 2rem; background: linear-gradient(135deg, #e0e7ff, #c7d2fe); padding: 2rem; border-radius: 24px;">
-            <h3 data-key="teachers_title">हमारे प्रमुख शिक्षक</h3>
-            <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-top: 1rem;">
-                <div><i class="fas fa-user-graduate" style="font-size: 2rem; color: var(--primary);"></i><h4>ससाणे सर</h4><p>गणित एवं विज्ञान</p><p>📞 9881296727</p></div>
-                <div><i class="fas fa-chalkboard" style="font-size: 2rem; color: var(--primary);"></i><h4>शिंदे सर</h4><p>भाषा एवं सामाजिक विज्ञान</p><p>📞 9075238958</p></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Courses Page -->
-    <div id="courses-page" class="page">
-        <h2 class="page-title"><span data-key="courses_title">हमारे अभ्यासक्रम</span></h2>
-        <div class="grid">
-            <div class="card"><i class="fas fa-book-open"></i><h3 data-key="course1">5वी - 8वी फाउंडेशन</h3><p data-key="course1_desc">मजबूत नींव, कॉन्सेप्ट क्लियरिटी, नियमित टेस्ट</p></div>
-            <div class="card"><i class="fas fa-flask"></i><h3 data-key="course2">9वी - 10वी बोर्ड प्रिपरेशन</h3><p data-key="course2_desc">पूर्ण सिलेबस, रिवीजन, मॉक टेस्ट, पिछले साल के पेपर</p></div>
-            <div class="card"><i class="fas fa-chart-line"></i><h3 data-key="course3">स्पर्धा परीक्षा</h3><p data-key="course3_desc">JEE/NEET फाउंडेशन, ओलंपियाड, MHT-CET तैयारी</p></div>
-            <div class="card"><i class="fas fa-laptop"></i><h3 data-key="course4">ऑनलाइन क्लासेस</h3><p data-key="course4_desc">लाइव्ह जूम क्लास, रिकॉर्डेड वीडियो, डाउट सपोर्ट</p></div>
-        </div>
-        <div style="text-align: center; margin-top: 2rem;">
-            <button class="btn btn-primary" data-page="registration"><i class="fas fa-user-plus"></i> <span data-key="enroll_now">अभी एडमिशन लें</span></button>
-            <button class="btn btn-outline" onclick="window.open('login.php', '_blank')" style="margin-left: 1rem; background: linear-gradient(135deg, #667eea, #764ba2); color: white;">
-                <i class="fas fa-laptop-code"></i> Online Test
-            </button>
-        </div>
-    </div>
-
-    <!-- Dashboard Page -->
-    <div id="dashboard-page" class="page">
-        <h2 class="page-title"><span data-key="dashboard_title">Student Dashboard</span></h2>
-        <div class="dashboard">
-            <div class="dashboard-tabs">
-                <button class="tab-btn active" data-tab="login"><span data-key="tab_login">Login</span></button>
-                <button class="tab-btn" data-tab="fees"><span data-key="tab_fees">Fee Status</span></button>
-                <button class="tab-btn" data-tab="results"><span data-key="tab_results">Test Results</span></button>
-                <button class="tab-btn" data-tab="material"><span data-key="tab_material">Study Material</span></button>
-                <button class="tab-btn" data-tab="online-test" onclick="window.open('login.php', '_blank')"><span data-key="tab_online_test">📝 Online Test</span></button>
-            </div>
-            
-            <div id="login-pane" class="tab-pane active">
-                <form id="loginForm">
-                    <input type="text" id="loginId" placeholder="Student ID / Mobile" required>
-                    <input type="password" id="loginPassword" placeholder="Password" required>
-                    <button type="submit" class="login-submit-btn">Login</button>
-                </form>
-                <div id="dashboardInfo" style="display:none; margin-top:1rem; background:#e6f7e6; padding:1rem; border-radius:12px;">
-                    <h4>Welcome, <span id="displayName"></span>!</h4>
-                    <p>Student ID: <strong id="displayId"></strong></p>
-                    <button id="logoutBtn" class="logout-btn">Logout</button>
-                </div>
-            </div>
-            
-            <div id="fees-pane" class="tab-pane">
-                <h3 data-key="fee_title">Fee Details</h3>
-                <div id="feeDetails">Please login to view fee status</div>
-            </div>
-            
-            <div id="results-pane" class="tab-pane">
-                <h3 data-key="results_title">Test Results</h3>
-                <canvas id="marksChart" width="400" height="200"></canvas>
-                <div id="marksList"></div>
-            </div>
-            
-            <div id="material-pane" class="tab-pane">
-                <h3 data-key="material_title">📚 Study Material</h3>
-                <ul style="list-style:none;">
-                    <li><i class="fas fa-file-pdf"></i> <a href="#">Mathematics Notes PDF</a></li>
-                    <li><i class="fas fa-file-pdf"></i> <a href="#">Science Sample Paper 2025</a></li>
-                    <li><i class="fas fa-video"></i> <a href="#">Recorded Lecture: Algebra</a></li>
-                    <li><i class="fas fa-download"></i> <a href="#">Previous Year Question Papers</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <!-- Registration Page -->
-    <div id="registration-page" class="page">
-        <h2 class="page-title"><span data-key="reg_title">📝 Online Registration</span></h2>
-        <div class="form-container">
-            <form id="registrationForm">
-                <input type="text" id="regName" placeholder="Student Full Name *" required>
-                <input type="tel" id="regPhone" placeholder="Mobile Number *" required>
-                <input type="email" id="regEmail" placeholder="Email ID">
-                <select id="regClass" required>
-                    <option value="">Select Class</option>
-                    <option>5th</option><option>6th</option><option>7th</option><option>8th</option><option>9th</option><option>10th</option>
-                </select>
-                <select id="regMedium">
-                    <option>CBSE Board</option><option>English Medium</option><option>Semi English</option><option>Marathi Medium</option>
-                </select>
-                <select id="regBatch">
-                    <option>Morning (7-9 AM)</option><option>Evening (4-6 PM)</option><option>Weekend Batch</option>
-                </select>
-                <button type="submit" class="register-btn">Register Now →</button>
-            </form>
-            <p style="text-align:center; margin-top:1rem;">✅ Free Demo Class | ✅ Scholarship Available | ✅ Easy Fee Payment</p>
-        </div>
-    </div>
-
-    <!-- Contact Page -->
-    <div id="contact-page" class="page">
-        <h2 class="page-title"><span data-key="contact_title">Contact Us</span></h2>
-        <div class="grid">
-            <div class="card"><i class="fas fa-phone-alt"></i><h3>Call Us</h3><p>ससाणे सर: 9881296727</p><p>शिंदे सर: 9075238958</p></div>
-            <div class="card"><i class="fas fa-envelope"></i><h3>Email</h3><p>info@chanakyacoaching.com</p></div>
-            <div class="card"><i class="fas fa-map-marker-alt"></i><h3>Address</h3><p>पुणे, महाराष्ट्र</p>
-                <iframe src="https://maps.google.com/maps?q=pune&t=&z=13&ie=UTF8&iwloc=&output=embed" width="100%" height="150" style="border:0; border-radius:12px; margin-top:10px;"></iframe>
-            </div>
-        </div>
-    </div>
+    <div id="home-page" class="page active-page"></div>
+    <div id="about-page" class="page"></div>
+    <div id="courses-page" class="page"></div>
+    <div id="dashboard-page" class="page"></div>
+    <div id="registration-page" class="page"></div>
+    <div id="contact-page" class="page"></div>
 </div>
 
 <footer>
-    <p>© 2025 श्रीनाथ चाणक्य कोचिंग क्लासेस | Excellence in Education</p>
-    <p><i class="fas fa-phone"></i> 9881296727 | 9075238958 | <i class="fas fa-laptop-code"></i> Online Test Available</p>
+    <p id="footerCopyright">© 2025 Shrinath Chanakya Coaching Classes | Excellence in Education</p>
+    <p><i class="fas fa-phone"></i> 9881296727 | 9075238958 | <i class="fas fa-laptop-code"></i> <span id="onlineTestText">Online Test Available</span></p>
 </footer>
 
-<!-- External JavaScript File (Must be at the end of body) -->
-<script src="script.js"></script>
+<script src="js/script.js"></script>
 
 <script>
-    // Mobile menu toggle
-    const menuToggle = document.getElementById('menuToggle');
-    const navLinks = document.getElementById('navLinks');
-    
-    if (menuToggle) {
-        menuToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
+function showPage(pageName) {
+    document.querySelectorAll('.page').forEach(page => page.classList.remove('active-page'));
+    document.getElementById(`${pageName}-page`).classList.add('active-page');
+    window.scrollTo({top: 0, behavior: 'smooth'});
+}
+window.showPage = showPage;
+
+// ========== ENGLISH + MARATHI TRANSLATIONS ==========
+const translations = {
+    en: {
+        // Navbar
+        logoTitle: "Shrinath Chanakya",
+        logoSubtitle: "Coaching Classes",
+        navHome: "🏠 Home",
+        navAbout: "📖 About",
+        navCourses: "📚 Courses",
+        navDashboard: "📊 Dashboard",
+        navRegistration: "📝 Registration",
+        navContact: "📞 Contact",
+        adminText: "Admin",
+        stickyEnroll: "Enroll Now",
+        
+        // Notice Board
+        noticeText: "📢 New Batch Starting from 1st April 2025 | 🎯 Scholarship Test on 25th March | 🏆 JEE/NEET Special Classes | 🖥️ Online Test Series Started!",
+        
+        // Footer
+        footerCopyright: "© 2025 Shrinath Chanakya Coaching Classes | Excellence in Education",
+        onlineTestText: "Online Test Available",
+        
+        // Hero Section
+        heroTitle: "Golden Step Towards ",
+        heroTitleSpan: "Success",
+        heroTeacher: "Sasane Sir (9881296727) | Shinde Sir (9075238958)",
+        heroMedium: "CBSE | English | Semi | Marathi | 5th to 10th All Mediums",
+        heroBtnReg: "Online Registration",
+        heroBtnDash: "Student Dashboard",
+        heroBtnTest: "Online Test",
+        
+        // Features Section
+        featuresTitle: "Our ",
+        featuresTitleSpan: "Features",
+        card1Title: "10+ Years Experience",
+        card1Text: "Decades of experience in education",
+        card2Title: "Excellent Results",
+        card2Text: "90%+ students in merit every year",
+        card3Title: "Personal Attention",
+        card3Text: "Limited batches, focus on each student",
+        card4Title: "All Mediums",
+        card4Text: "CBSE, English, Semi, Marathi",
+        
+        // Counter Section
+        counter1: "+ Students Trained",
+        counter2: "+ Years Experience",
+        counter3: "% Success Rate",
+        counter4: "Expert Faculties",
+        
+        // Events Section
+        eventsTitle: "Upcoming ",
+        eventsTitleSpan: "Events",
+        event1Title: "Scholarship Test",
+        event1Desc: "10:00 AM onwards - Offline Mode",
+        event1Btn: "Register Now",
+        event2Title: "New Batch Starts",
+        event2Desc: "New batches for all classes",
+        event2Btn: "Enroll Now",
+        
+        // Testimonials
+        testimonialTitle: "Student ",
+        testimonialTitleSpan: "Experiences",
+        testimonial1Text: "Sasane Sir's teaching style is excellent. My math has improved a lot.",
+        testimonial1Name: "- Aditya Sharma",
+        testimonial2Text: "Shinde Sir's English classes boosted my confidence. Great coaching.",
+        testimonial2Name: "- Priya Patil",
+        testimonial3Text: "Online test series is very helpful. Got 95% result.",
+        testimonial3Name: "- Rishikesh Joshi",
+        
+        // CTA Section
+        ctaTitle: "First Step Towards Success",
+        ctaText: "Book a free demo class and know our teaching style",
+        ctaBtn1: "Register Now",
+        ctaBtn2: "Contact on WhatsApp"
+    },
+    mr: {
+        // Navbar
+        logoTitle: "श्रीनाथ चाणक्य",
+        logoSubtitle: "कोचिंग क्लासेस",
+        navHome: "🏠 मुख्यपृष्ठ",
+        navAbout: "📖 आमच्याबद्दल",
+        navCourses: "📚 अभ्यासक्रम",
+        navDashboard: "📊 डॅशबोर्ड",
+        navRegistration: "📝 नोंदणी",
+        navContact: "📞 संपर्क",
+        adminText: "प्रशासक",
+        stickyEnroll: "आता प्रवेश घ्या",
+        
+        // Notice Board
+        noticeText: "📢 नवीन बॅच १ एप्रिल २०२५ पासून | 🎯 शिष्यवृत्ती चाचणी २५ मार्च | 🏆 JEE/NEET विशेष वर्ग | 🖥️ ऑनलाइन टेस्ट सीरीज सुरू!",
+        
+        // Footer
+        footerCopyright: "© २०२५ श्रीनाथ चाणक्य कोचिंग क्लासेस | शिक्षणातील उत्कृष्टता",
+        onlineTestText: "ऑनलाइन टेस्ट उपलब्ध",
+        
+        // Hero Section
+        heroTitle: "यशाच्या दिशेने ",
+        heroTitleSpan: "सुवर्ण पाऊल",
+        heroTeacher: "ससाणे सर (9881296727) | शिंदे सर (9075238958)",
+        heroMedium: "CBSE | इंग्रजी | सेमी | मराठी | ५वी ते १०वी सर्व माध्यम",
+        heroBtnReg: "ऑनलाइन नोंदणी",
+        heroBtnDash: "विद्यार्थी डॅशबोर्ड",
+        heroBtnTest: "ऑनलाइन टेस्ट",
+        
+        // Features Section
+        featuresTitle: "आमची ",
+        featuresTitleSpan: "वैशिष्ट्ये",
+        card1Title: "१०+ वर्षे अनुभव",
+        card1Text: "शिक्षण क्षेत्रात दशकांचा अनुभव",
+        card2Title: "उत्कृष्ट परिणाम",
+        card2Text: "दरवर्षी ९०%+ विद्यार्थी मेरिटमध्ये",
+        card3Title: "वैयक्तिक लक्ष",
+        card3Text: "मर्यादित बॅच, प्रत्येक विद्यार्थ्यावर लक्ष",
+        card4Title: "सर्व माध्यम",
+        card4Text: "CBSE, इंग्रजी, सेमी, मराठी",
+        
+        // Counter Section
+        counter1: "+ विद्यार्थी प्रशिक्षित",
+        counter2: "+ वर्षे अनुभव",
+        counter3: "% यशाचे प्रमाण",
+        counter4: "तज्ञ शिक्षक",
+        
+        // Events Section
+        eventsTitle: "आगामी ",
+        eventsTitleSpan: "कार्यक्रम",
+        event1Title: "शिष्यवृत्ती चाचणी",
+        event1Desc: "सकाळी १०:०० वा. - ऑफलाइन पद्धतीने",
+        event1Btn: "आता नोंदणी करा",
+        event2Title: "नवीन बॅच सुरू",
+        event2Desc: "सर्व वर्गांसाठी नवीन बॅच",
+        event2Btn: "प्रवेश घ्या",
+        
+        // Testimonials
+        testimonialTitle: "विद्यार्थ्यांचे ",
+        testimonialTitleSpan: "अनुभव",
+        testimonial1Text: "ससाणे सरांची शिकवण्याची पद्धत खूप चांगली आहे. माझ्या गणितात खूप सुधारणा झाली.",
+        testimonial1Name: "- आदित्य शर्मा",
+        testimonial2Text: "शिंदे सरांच्या इंग्रजी वर्गांमुळे माझा आत्मविश्वास वाढला. उत्तम कोचिंग आहे.",
+        testimonial2Name: "- प्रिया पाटील",
+        testimonial3Text: "ऑनलाइन टेस्ट सीरीज खूप उपयोगी आहे. ९५% निकाल मिळाला.",
+        testimonial3Name: "- ऋषिकेश जोशी",
+        
+        // CTA Section
+        ctaTitle: "यशाच्या दिशेने पहिले पाऊल",
+        ctaText: "फ्री डेमो क्लास बुक करा आणि आमची शिकवण्याची पद्धत जाणून घ्या",
+        ctaBtn1: "आता नोंदणी करा",
+        ctaBtn2: "व्हॉट्सअपवर संपर्क करा"
     }
+};
+
+let currentLang = 'en';
+
+function updateLanguage(lang) {
+    currentLang = lang;
+    const t = translations[lang];
     
-    // Page navigation
-    document.querySelectorAll('[data-page]').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            const pageId = this.getAttribute('data-page') + '-page';
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active-page');
-            });
-            const targetPage = document.getElementById(pageId);
-            if (targetPage) targetPage.classList.add('active-page');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            
-            // Close mobile menu
-            if (navLinks.classList.contains('active')) {
-                navLinks.classList.remove('active');
-            }
-        });
+    // Update navbar elements
+    document.getElementById('logoTitle').innerText = t.logoTitle;
+    document.getElementById('logoSubtitle').innerText = t.logoSubtitle;
+    document.getElementById('navHome').innerHTML = t.navHome;
+    document.getElementById('navAbout').innerHTML = t.navAbout;
+    document.getElementById('navCourses').innerHTML = t.navCourses;
+    document.getElementById('navDashboard').innerHTML = t.navDashboard;
+    document.getElementById('navRegistration').innerHTML = t.navRegistration;
+    document.getElementById('navContact').innerHTML = t.navContact;
+    document.getElementById('adminText').innerText = t.adminText;
+    document.getElementById('stickyEnrollText').innerText = t.stickyEnroll;
+    document.getElementById('noticeText').innerText = t.noticeText;
+    document.getElementById('footerCopyright').innerText = t.footerCopyright;
+    document.getElementById('onlineTestText').innerText = t.onlineTestText;
+    
+    // Update home page content
+    updateHomePageContent(t);
+    
+    // Update other pages
+    updateAboutPageContent(t);
+    updateCoursesPageContent(t);
+    updateContactPageContent(t);
+    updateRegistrationPageContent(t);
+    updateDashboardPageContent(t);
+}
+
+function updateHomePageContent(t) {
+    const homePage = document.getElementById('home-page');
+    if(homePage && homePage.innerHTML) {
+        let html = homePage.innerHTML;
+        
+        // Hero Section
+        html = html.replace(/<h1[^>]*>.*?<span[^>]*id="heroTitleSpan"[^>]*>.*?<\/span>.*?<\/h1>/, 
+            `<h1>${t.heroTitle}<span id="heroTitleSpan">${t.heroTitleSpan}</span></h1>`);
+        html = html.replace(/<p id="heroTeacher">.*?<\/p>/, `<p id="heroTeacher">${t.heroTeacher}</p>`);
+        html = html.replace(/<p id="heroMedium">.*?<\/p>/, `<p id="heroMedium">${t.heroMedium}</p>`);
+        html = html.replace(/<button[^>]*id="heroBtnReg"[^>]*>.*?<\/button>/, 
+            `<button class="btn btn-primary" data-page="registration" id="heroBtnReg"><i class="fas fa-user-plus"></i> ${t.heroBtnReg}</button>`);
+        html = html.replace(/<button[^>]*id="heroBtnDash"[^>]*>.*?<\/button>/, 
+            `<button class="btn btn-outline" data-page="dashboard" id="heroBtnDash"><i class="fas fa-chart-line"></i> ${t.heroBtnDash}</button>`);
+        html = html.replace(/<button[^>]*id="heroBtnTest"[^>]*>.*?<\/button>/, 
+            `<button class="btn btn-outline" onclick="window.open('../login.php', '_blank')" id="heroBtnTest"><i class="fas fa-laptop-code"></i> ${t.heroBtnTest}</button>`);
+        
+        // Features Title
+        html = html.replace(/<h2 class="page-title" id="featuresTitle">.*?<span id="featuresTitleSpan">.*?<\/span>.*?<\/h2>/, 
+            `<h2 class="page-title" id="featuresTitle">${t.featuresTitle}<span id="featuresTitleSpan">${t.featuresTitleSpan}</span></h2>`);
+        
+        // Feature Cards
+        html = html.replace(/<h3 id="card1Title">.*?<\/h3>/, `<h3 id="card1Title">${t.card1Title}</h3>`);
+        html = html.replace(/<p id="card1Text">.*?<\/p>/, `<p id="card1Text">${t.card1Text}</p>`);
+        html = html.replace(/<h3 id="card2Title">.*?<\/h3>/, `<h3 id="card2Title">${t.card2Title}</h3>`);
+        html = html.replace(/<p id="card2Text">.*?<\/p>/, `<p id="card2Text">${t.card2Text}</p>`);
+        html = html.replace(/<h3 id="card3Title">.*?<\/h3>/, `<h3 id="card3Title">${t.card3Title}</h3>`);
+        html = html.replace(/<p id="card3Text">.*?<\/p>/, `<p id="card3Text">${t.card3Text}</p>`);
+        html = html.replace(/<h3 id="card4Title">.*?<\/h3>/, `<h3 id="card4Title">${t.card4Title}</h3>`);
+        html = html.replace(/<p id="card4Text">.*?<\/p>/, `<p id="card4Text">${t.card4Text}</p>`);
+        
+        // Counter Labels
+        html = html.replace(/<div class="counter-label" id="counterLabel1">.*?<\/div>/, `<div class="counter-label" id="counterLabel1">${t.counter1}</div>`);
+        html = html.replace(/<div class="counter-label" id="counterLabel2">.*?<\/div>/, `<div class="counter-label" id="counterLabel2">${t.counter2}</div>`);
+        html = html.replace(/<div class="counter-label" id="counterLabel3">.*?<\/div>/, `<div class="counter-label" id="counterLabel3">${t.counter3}</div>`);
+        html = html.replace(/<div class="counter-label" id="counterLabel4">.*?<\/div>/, `<div class="counter-label" id="counterLabel4">${t.counter4}</div>`);
+        
+        // Events Title
+        html = html.replace(/<h2 class="page-title" id="eventsTitle">.*?<span id="eventsTitleSpan">.*?<\/span>.*?<\/h2>/, 
+            `<h2 class="page-title" id="eventsTitle">${t.eventsTitle}<span id="eventsTitleSpan">${t.eventsTitleSpan}</span></h2>`);
+        
+        // Events
+        html = html.replace(/<h3 id="event1Title">.*?<\/h3>/, `<h3 id="event1Title">${t.event1Title}</h3>`);
+        html = html.replace(/<p id="event1Desc">.*?<\/p>/, `<p id="event1Desc">${t.event1Desc}</p>`);
+        html = html.replace(/<button[^>]*id="event1Btn"[^>]*>.*?<\/button>/, `<button class="event-btn" data-page="registration" id="event1Btn">${t.event1Btn}</button>`);
+        html = html.replace(/<h3 id="event2Title">.*?<\/h3>/, `<h3 id="event2Title">${t.event2Title}</h3>`);
+        html = html.replace(/<p id="event2Desc">.*?<\/p>/, `<p id="event2Desc">${t.event2Desc}</p>`);
+        html = html.replace(/<button[^>]*id="event2Btn"[^>]*>.*?<\/button>/, `<button class="event-btn" data-page="registration" id="event2Btn">${t.event2Btn}</button>`);
+        
+        // Testimonials Title
+        html = html.replace(/<h2 class="page-title" id="testimonialTitle">.*?<span id="testimonialTitleSpan">.*?<\/span>.*?<\/h2>/, 
+            `<h2 class="page-title" id="testimonialTitle">${t.testimonialTitle}<span id="testimonialTitleSpan">${t.testimonialTitleSpan}</span></h2>`);
+        
+        // Testimonials
+        html = html.replace(/<p id="testimonial1Text">.*?<\/p>/, `<p id="testimonial1Text">"${t.testimonial1Text}"</p>`);
+        html = html.replace(/<h4 id="testimonial1Name">.*?<\/h4>/, `<h4 id="testimonial1Name">${t.testimonial1Name}</h4>`);
+        html = html.replace(/<p id="testimonial2Text">.*?<\/p>/, `<p id="testimonial2Text">"${t.testimonial2Text}"</p>`);
+        html = html.replace(/<h4 id="testimonial2Name">.*?<\/h4>/, `<h4 id="testimonial2Name">${t.testimonial2Name}</h4>`);
+        html = html.replace(/<p id="testimonial3Text">.*?<\/p>/, `<p id="testimonial3Text">"${t.testimonial3Text}"</p>`);
+        html = html.replace(/<h4 id="testimonial3Name">.*?<\/h4>/, `<h4 id="testimonial3Name">${t.testimonial3Name}</h4>`);
+        
+        // CTA Section
+        html = html.replace(/<h2 id="ctaTitle">.*?<\/h2>/, `<h2 id="ctaTitle">${t.ctaTitle}</h2>`);
+        html = html.replace(/<p id="ctaText">.*?<\/p>/, `<p id="ctaText">${t.ctaText}</p>`);
+        html = html.replace(/<button[^>]*id="ctaBtn1"[^>]*>.*?<\/button>/, `<button class="cta-btn primary" data-page="registration" id="ctaBtn1">${t.ctaBtn1}</button>`);
+        html = html.replace(/<button[^>]*id="ctaBtn2"[^>]*>.*?<\/button>/, `<button class="cta-btn secondary" onclick="window.open('https://wa.me/919881296727', '_blank')" id="ctaBtn2">${t.ctaBtn2}</button>`);
+        
+        homePage.innerHTML = html;
+    }
+}
+
+function updateAboutPageContent(t) {
+    const aboutPage = document.getElementById('about-page');
+    if(aboutPage && aboutPage.innerHTML) {
+        let html = aboutPage.innerHTML;
+        html = html.replace(/<h2 class="page-title">.*?<\/h2>/, 
+            `<h2 class="page-title">${currentLang === 'en' ? 'About <span>Us</span>' : 'आमच्या <span>बद्दल</span>'}</h2>`);
+        aboutPage.innerHTML = html;
+    }
+}
+
+function updateCoursesPageContent(t) {
+    const coursesPage = document.getElementById('courses-page');
+    if(coursesPage && coursesPage.innerHTML) {
+        let html = coursesPage.innerHTML;
+        html = html.replace(/<h2 class="page-title">.*?<\/h2>/, 
+            `<h2 class="page-title">${currentLang === 'en' ? 'Our <span>Courses</span>' : 'आमचे <span>अभ्यासक्रम</span>'}</h2>`);
+        html = html.replace(/अभी एडमिशन लें/, currentLang === 'en' ? 'Enroll Now' : 'आता प्रवेश घ्या');
+        coursesPage.innerHTML = html;
+    }
+}
+
+function updateContactPageContent(t) {
+    const contactPage = document.getElementById('contact-page');
+    if(contactPage && contactPage.innerHTML) {
+        let html = contactPage.innerHTML;
+        html = html.replace(/<h2 class="page-title">.*?<\/h2>/, 
+            `<h2 class="page-title">${currentLang === 'en' ? 'Contact <span>Us</span>' : 'संपर्क <span>करा</span>'}</h2>`);
+        html = html.replace(/Call Us/, currentLang === 'en' ? 'Call Us' : 'कॉल करा');
+        html = html.replace(/Email/, currentLang === 'en' ? 'Email' : 'ईमेल');
+        html = html.replace(/Address/, currentLang === 'en' ? 'Address' : 'पत्ता');
+        contactPage.innerHTML = html;
+    }
+}
+
+function updateRegistrationPageContent(t) {
+    const registrationPage = document.getElementById('registration-page');
+    if(registrationPage && registrationPage.innerHTML) {
+        let html = registrationPage.innerHTML;
+        html = html.replace(/Personal Information/, currentLang === 'en' ? 'Personal Information' : 'वैयक्तिक माहिती');
+        html = html.replace(/Student Full Name/, currentLang === 'en' ? 'Student Full Name' : 'विद्यार्थ्याचे पूर्ण नाव');
+        html = html.replace(/Mobile Number/, currentLang === 'en' ? 'Mobile Number' : 'मोबाइल नंबर');
+        html = html.replace(/WhatsApp Number/, currentLang === 'en' ? 'WhatsApp Number' : 'व्हॉट्सअप नंबर');
+        html = html.replace(/Gender/, currentLang === 'en' ? 'Gender' : 'लिंग');
+        html = html.replace(/Date of Birth/, currentLang === 'en' ? 'Date of Birth' : 'जन्मतारीख');
+        html = html.replace(/Email ID/, currentLang === 'en' ? 'Email ID' : 'ईमेल आयडी');
+        html = html.replace(/Parent\/Guardian Name/, currentLang === 'en' ? 'Parent/Guardian Name' : 'पालकांचे नाव');
+        html = html.replace(/Complete Address/, currentLang === 'en' ? 'Complete Address' : 'संपूर्ण पत्ता');
+        html = html.replace(/Academic Details/, currentLang === 'en' ? 'Academic Details' : 'शैक्षणिक माहिती');
+        html = html.replace(/Current Class/, currentLang === 'en' ? 'Current Class' : 'सध्याची कक्षा');
+        html = html.replace(/School Name/, currentLang === 'en' ? 'School Name' : 'शाळेचे नाव');
+        html = html.replace(/Medium of Study/, currentLang === 'en' ? 'Medium of Study' : 'शिक्षण माध्यम');
+        html = html.replace(/Previous Year Percentage/, currentLang === 'en' ? 'Previous Year Percentage' : 'मागील वर्षाची टक्केवारी');
+        html = html.replace(/Subjects Interested/, currentLang === 'en' ? 'Subjects Interested' : 'आवडते विषय');
+        html = html.replace(/Competitive Exam Interest/, currentLang === 'en' ? 'Competitive Exam Interest' : 'स्पर्धा परीक्षा रुची');
+        html = html.replace(/Preferences/, currentLang === 'en' ? 'Preferences' : 'प्राधान्ये');
+        html = html.replace(/Batch Preference/, currentLang === 'en' ? 'Batch Preference' : 'बॅच प्राधान्य');
+        html = html.replace(/Mode of Learning/, currentLang === 'en' ? 'Mode of Learning' : 'शिक्षण पद्धती');
+        html = html.replace(/How did you hear about us\?/, currentLang === 'en' ? 'How did you hear about us?' : 'आमच्याबद्दल कसे कळले?');
+        html = html.replace(/Special Requirements \/ Questions/, currentLang === 'en' ? 'Special Requirements / Questions' : 'विशेष गरजा / प्रश्न');
+        html = html.replace(/Next →/, currentLang === 'en' ? 'Next →' : 'पुढे →');
+        html = html.replace(/← Back/, currentLang === 'en' ? '← Back' : '← मागे');
+        html = html.replace(/Submit Registration/, currentLang === 'en' ? 'Submit Registration' : 'नोंदणी सबमिट करा');
+        registrationPage.innerHTML = html;
+    }
+}
+
+function updateDashboardPageContent(t) {
+    const dashboardPage = document.getElementById('dashboard-page');
+    if(dashboardPage && dashboardPage.innerHTML) {
+        let html = dashboardPage.innerHTML;
+        html = html.replace(/<h2 class="page-title">.*?<\/h2>/, 
+            `<h2 class="page-title">${currentLang === 'en' ? 'Student <span>Dashboard</span>' : 'विद्यार्थी <span>डॅशबोर्ड</span>'}</h2>`);
+        html = html.replace(/Please login to access your dashboard./, 
+            currentLang === 'en' ? 'Please login to access your dashboard.' : 'कृपया तुमच्या डॅशबोर्डमध्ये प्रवेश करण्यासाठी लॉगिन करा.');
+        html = html.replace(/Login Here/, currentLang === 'en' ? 'Login Here' : 'येथे लॉगिन करा');
+        dashboardPage.innerHTML = html;
+    }
+}
+
+// Language switcher event listeners
+document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const lang = this.getAttribute('data-lang');
+        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        updateLanguage(lang);
     });
+});
+
+// Set default active language
+document.querySelector('.lang-btn[data-lang="en"]').classList.add('active');
 </script>
 </body>
 </html>
