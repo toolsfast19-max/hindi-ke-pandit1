@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration - श्रीनाथ चाणक्य कोचिंग सेंटर</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #c9a03d 0%, #9c7a2c 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .registration-wrapper {
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .header h1 span {
+            color: #fef3c7;
+        }
+
+        .header p {
+            color: rgba(255,255,255,0.9);
+            font-size: 0.9rem;
+        }
+
+        .form-card {
+            background: white;
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .progress-steps::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #e2e8f0;
+            z-index: 1;
+        }
+
+        .step {
+            text-align: center;
+            z-index: 2;
+            background: white;
+            padding: 0 10px;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: #e2e8f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 8px;
+            font-weight: 600;
+            color: #64748b;
+            transition: all 0.3s;
+        }
+
+        .step.active .step-number {
+            background: #c9a03d;
+            color: white;
+            box-shadow: 0 0 0 4px rgba(201,160,61,0.2);
+        }
+
+        .step.completed .step-number {
+            background: #10b981;
+            color: white;
+        }
+
+        .step-label {
+            font-size: 0.75rem;
+            color: #64748b;
+        }
+
+        .step.active .step-label {
+            color: #c9a03d;
+            font-weight: 500;
+        }
+
+        .form-section {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .form-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: #1e293b;
+            border-left: 4px solid #c9a03d;
+            padding-left: 12px;
+        }
+
+        .section-title i {
+            color: #c9a03d;
+            margin-right: 8px;
+        }
+
+        .input-group {
+            margin-bottom: 1rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: #334155;
+            font-size: 0.85rem;
+        }
+
+        .required {
+            color: #ef4444;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #c9a03d;
+            box-shadow: 0 0 0 3px rgba(201,160,61,0.1);
+        }
+
+        .row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .col {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .subject-check {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: #f8fafc;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .subject-check:hover {
+            background: #e2e8f0;
+        }
+
+        .subject-check input {
+            width: 18px;
+            height: 18px;
+            margin: 0;
+        }
+
+        .subject-check span {
+            font-size: 0.85rem;
+        }
+
+        .error-msg {
+            color: #ef4444;
+            font-size: 11px;
+            margin-top: 4px;
+            min-height: 18px;
+        }
+
+        .validation-error {
+            border-color: #ef4444 !important;
+            background: #fef2f2 !important;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            justify-content: center;
+        }
+
+        .btn-next, .btn-prev, .btn-submit {
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .btn-next {
+            background: #c9a03d;
+            color: white;
+        }
+
+        .btn-next:hover {
+            background: #9c7a2c;
+            transform: translateY(-2px);
+        }
+
+        .btn-prev {
+            background: #e2e8f0;
+            color: #1e293b;
+        }
+
+        .btn-prev:hover {
+            background: #cbd5e1;
+        }
+
+        .btn-submit {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-submit:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+
+        .benefits {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: #fef3c7;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .benefits p {
+            color: #92400e;
+            font-size: 0.8rem;
+            margin: 5px 0;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.75rem;
+        }
+
+        @media (max-width: 600px) {
+            .form-card {
+                padding: 1.5rem;
+            }
+            .subjects-grid {
+                grid-template-columns: 1fr;
+            }
+            .btn-group {
+                flex-direction: column;
+            }
+            .btn-next, .btn-prev, .btn-submit {
+                width: 100%;
+            }
+            .step-label {
+                display: none;
+            }
+            .step-number {
+                width: 32px;
+                height: 32px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="registration-wrapper">
+        <div class="header">
+            <h1>श्रीनाथ <span>चाणक्य</span></h1>
+            <p>कोचिंग क्लासेस | Excellence in Education</p>
+        </div>
+
+        <div class="form-card">
+            <div class="progress-steps">
+                <div class="step active" data-step="1">
+                    <div class="step-number">1</div>
+                    <div class="step-label">Personal</div>
+                </div>
+                <div class="step" data-step="2">
+                    <div class="step-number">2</div>
+                    <div class="step-label">Academic</div>
+                </div>
+                <div class="step" data-step="3">
+                    <div class="step-number">3</div>
+                    <div class="step-label">Preferences</div>
+                </div>
+            </div>
+
+            <!-- Step 1: Personal Information - ID = step1Section -->
+            <div id="step1Section" class="form-section active">
+                <h3 class="section-title"><i class="fas fa-user"></i> Personal Information</h3>
+                
+                <div class="input-group">
+                    <label>Student Full Name <span class="required">*</span></label>
+                    <input type="text" id="fullName" placeholder="Enter full name">
+                    <div class="error-msg" id="nameError"></div>
+                </div>
+                
+                <div class="row">
+                    <div class="col">
+                        <div class="input-group">
+                            <label>Mobile Number <span class="required">*</span></label>
+                            <input type="tel" id="mobileNumber" placeholder="10-digit mobile number">
+                            <div class="error-msg" id="mobileError"></div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="input-group">
+                            <label>WhatsApp Number</label>
+                            <input type="tel" id="whatsapp" placeholder="Same as mobile">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col">
+                        <div class="input-group">
+                            <label>Gender <span class="required">*</span></label>
+                            <select id="gender">
+                                <option value="">Select Gender</option>
+                                <option>Male</option>
+                                <option>Female</option>
+                                <option>Other</option>
+                            </select>
+                            <div class="error-msg" id="genderError"></div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="input-group">
+                            <label>Date of Birth</label>
+                            <input type="date" id="dob">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label>Email ID</label>
+                    <input type="email" id="email" placeholder="Enter email for confirmation">
+                </div>
+                
+                <div class="input-group">
+                    <label>Parent/Guardian Name <span class="required">*</span></label>
+                    <input type="text" id="parentName" placeholder="Parent/Guardian full name">
+                    <div class="error-msg" id="parentError"></div>
+                </div>
+                
+                <div class="input-group">
+                    <label>Complete Address</label>
+                    <textarea id="address" rows="2" placeholder="House No., Street, Area, City"></textarea>
+                </div>
+                
+                <div class="btn-group">
+                    <button class="btn-next" onclick="window.nextStep(1)">Next →</button>
+                </div>
+            </div>
+
+            <!-- Step 2: Academic Details - ID = step2Section -->
+            <div id="step2Section" class="form-section">
+                <h3 class="section-title"><i class="fas fa-graduation-cap"></i> Academic Details</h3>
+                
+                <div class="row">
+                    <div class="col">
+                        <div class="input-group">
+                            <label>Current Class <span class="required">*</span></label>
+                            <select id="currentClass">
+                                <option value="">Select Class</option>
+                                <option>5th</option>
+                                <option>6th</option>
+                                <option>7th</option>
+                                <option>8th</option>
+                                <option>9th</option>
+                                <option>10th</option>
+                                <option>11th Science</option>
+                                <option>11th Commerce</option>
+                                <option>12th Science</option>
+                                <option>12th Commerce</option>
+                            </select>
+                            <div class="error-msg" id="classError"></div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="input-group">
+                            <label>School Name</label>
+                            <input type="text" id="schoolName" placeholder="School/College name">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col">
+                        <div class="input-group">
+                            <label>Medium of Study <span class="required">*</span></label>
+                            <select id="medium">
+                                <option value="">Select Medium</option>
+                                <option>CBSE Board</option>
+                                <option>English Medium</option>
+                                <option>Semi English</option>
+                                <option>Marathi Medium</option>
+                            </select>
+                            <div class="error-msg" id="mediumError"></div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="input-group">
+                            <label>Previous Year Percentage</label>
+                            <input type="text" id="percentage" placeholder="e.g., 85%">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label>Subjects Interested <span class="required">*</span></label>
+                    <div class="subjects-grid">
+                        <label class="subject-check">
+                            <input type="checkbox" value="Mathematics" class="subject"> <span>📐 Mathematics</span>
+                        </label>
+                        <label class="subject-check">
+                            <input type="checkbox" value="Science" class="subject"> <span>🔬 Science</span>
+                        </label>
+                        <label class="subject-check">
+                            <input type="checkbox" value="English" class="subject"> <span>📖 English</span>
+                        </label>
+                        <label class="subject-check">
+                            <input type="checkbox" value="Social Science" class="subject"> <span>🌍 Social Science</span>
+                        </label>
+                        <label class="subject-check">
+                            <input type="checkbox" value="Marathi" class="subject"> <span>📜 Marathi</span>
+                        </label>
+                        <label class="subject-check">
+                            <input type="checkbox" value="Hindi" class="subject"> <span>📚 Hindi</span>
+                        </label>
+                    </div>
+                    <div class="error-msg" id="subjectsError"></div>
+                </div>
+                
+                <div class="input-group">
+                    <label>Competitive Exam Interest</label>
+                    <select id="competitiveExam">
+                        <option>Not Interested</option>
+                        <option>JEE Foundation</option>
+                        <option>NEET Foundation</option>
+                        <option>MHT-CET</option>
+                        <option>Olympiad</option>
+                        <option>Scholarship Exam</option>
+                    </select>
+                </div>
+                
+                <div class="btn-group">
+                    <button class="btn-prev" onclick="window.prevStep(2)">← Back</button>
+                    <button class="btn-next" onclick="window.nextStep(2)">Next →</button>
+                </div>
+            </div>
+
+            <!-- Step 3: Preferences - ID = step3Section -->
+            <div id="step3Section" class="form-section">
+                <h3 class="section-title"><i class="fas fa-calendar-alt"></i> Preferences</h3>
+                
+                <div class="row">
+                    <div class="col">
+                        <div class="input-group">
+                            <label>Batch Preference <span class="required">*</span></label>
+                            <select id="batch">
+                                <option value="">Select Batch</option>
+                                <option>Morning (7:00 AM - 9:00 AM)</option>
+                                <option>Afternoon (12:00 PM - 2:00 PM)</option>
+                                <option>Evening (4:00 PM - 6:00 PM)</option>
+                                <option>Evening (6:00 PM - 8:00 PM)</option>
+                                <option>Weekend Batch (Saturday-Sunday)</option>
+                            </select>
+                            <div class="error-msg" id="batchError"></div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="input-group">
+                            <label>Mode of Learning</label>
+                            <select id="mode">
+                                <option>Offline (Classroom)</option>
+                                <option>Online (Live Classes)</option>
+                                <option>Hybrid (Both)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label>How did you hear about us?</label>
+                    <select id="heardFrom">
+                        <option>Select</option>
+                        <option>Google Search</option>
+                        <option>Social Media</option>
+                        <option>Friend/Family</option>
+                        <option>School Teacher</option>
+                        <option>Advertisement</option>
+                        <option>WhatsApp Group</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <label>Special Requirements / Questions</label>
+                    <textarea id="notes" rows="3" placeholder="Any specific requirements, medical conditions, or questions?"></textarea>
+                </div>
+                
+                <div class="btn-group">
+                    <button class="btn-prev" onclick="window.prevStep(3)">← Back</button>
+                    <button class="btn-submit" onclick="window.submitRegistration()">✓ Submit Registration</button>
+                </div>
+            </div>
+
+            <div class="benefits">
+                <p>✅ Free Demo Class | ✅ Scholarship Available | ✅ Flexible Batch Timings</p>
+                <p>✅ Study Material Included | ✅ Doubt Solving Sessions | ✅ Expert Faculty</p>
+                <p>✅ Online Test Series | ✅ Recorded Videos | ✅ Parent-Teacher Meeting</p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>📞 For queries: 9881296727 | 9075238958 | 📧 info@shrinathchanakya.com</p>
+        </div>
+    </div>
+</body>
+</html>
