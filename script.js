@@ -1,297 +1,326 @@
-// ========== PAGE NAVIGATION ==========
-const pages = ['home', 'about', 'courses', 'dashboard', 'registration', 'contact'];
-let currentPage = 'home';
-
-function showPage(pageId) {
-    pages.forEach(p => {
-        const pageElem = document.getElementById(`${p}-page`);
-        if (pageElem) pageElem.classList.remove('active-page');
-    });
-    const activePage = document.getElementById(`${pageId}-page`);
-    if (activePage) activePage.classList.add('active-page');
-    currentPage = pageId;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+// ========== LOAD PAGES DYNAMICALLY ==========
+async function loadPage(pageName) {
+    try {
+        const response = await fetch(`pages/${pageName}.html`);
+        const html = await response.text();
+        document.getElementById(`${pageName}-page`).innerHTML = html;
+        
+        if(pageName === 'registration') {
+            setTimeout(() => {
+                if(typeof window.showStep === 'function') window.showStep(1);
+            }, 100);
+        }
+        
+        if(pageName === 'home') {
+            setTimeout(() => {
+                startCounters();
+            }, 200);
+        }
+    } catch(error) {
+        console.error('Error loading page:', error);
+    }
 }
 
-// Add click event to all data-page elements
-document.querySelectorAll('[data-page]').forEach(el => {
-    el.addEventListener('click', (e) => {
-        const page = el.getAttribute('data-page');
-        if (page) showPage(page);
+async function loadAllPages() {
+    const pages = ['home', 'about', 'courses', 'dashboard', 'registration', 'contact'];
+    for(let page of pages) {
+        await loadPage(page);
+    }
+    
+    setTimeout(() => {
+        if(document.getElementById('home-page').classList.contains('active-page')) {
+            startCounters();
+        }
+    }, 500);
+}
+
+// ========== MOBILE NUMBER VALIDATION ==========
+function isValidMobile(mobile) {
+    let cleanMobile = mobile.toString().trim();
+    if(cleanMobile.startsWith('+91')) cleanMobile = cleanMobile.substring(3);
+    if(cleanMobile.startsWith('0')) cleanMobile = cleanMobile.substring(1);
+    cleanMobile = cleanMobile.replace(/[\s-]/g, '');
+    return /^[0-9]{10}$/.test(cleanMobile);
+}
+
+function getCleanMobile(mobile) {
+    let cleanMobile = mobile.toString().trim();
+    if(cleanMobile.startsWith('+91')) cleanMobile = cleanMobile.substring(3);
+    if(cleanMobile.startsWith('0')) cleanMobile = cleanMobile.substring(1);
+    cleanMobile = cleanMobile.replace(/[\s-]/g, '');
+    return cleanMobile;
+}
+
+// ========== PAGE NAVIGATION ==========
+document.querySelectorAll('[data-page]').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const pageId = this.getAttribute('data-page');
+        document.querySelectorAll('.page').forEach(page => page.classList.remove('active-page'));
+        document.getElementById(`${pageId}-page`).classList.add('active-page');
+        window.scrollTo({top: 0, behavior: 'smooth'});
+        
+        const navLinks = document.getElementById('navLinks');
+        if(navLinks) navLinks.classList.remove('active');
+        
+        if(pageId === 'home') {
+            setTimeout(() => startCounters(), 300);
+        }
     });
 });
 
-// ========== MOBILE MENU TOGGLE ==========
+// ========== MOBILE MENU ==========
 const menuToggle = document.getElementById('menuToggle');
 const navLinks = document.getElementById('navLinks');
-
-if (menuToggle) {
-    menuToggle.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-    });
+if(menuToggle) {
+    menuToggle.addEventListener('click', () => navLinks.classList.toggle('active'));
 }
 
 // ========== STICKY ENROLL BUTTON ==========
-const stickyEnrollBtn = document.getElementById('stickyEnrollBtn');
-if (stickyEnrollBtn) {
-    stickyEnrollBtn.addEventListener('click', (e) => {
+const stickyBtn = document.getElementById('stickyEnrollBtn');
+if(stickyBtn) {
+    stickyBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        showPage('registration');
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
+        document.getElementById('registration-page').classList.add('active-page');
+        window.scrollTo({top: 0, behavior: 'smooth'});
     });
 }
 
-// ========== DASHBOARD TABS ==========
-document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
-        document.getElementById(`${btn.dataset.tab}-pane`).classList.add('active');
+// ========== LANGUAGE SWITCHER (EN + MR) ==========
+const langBtns = document.querySelectorAll('.lang-btn');
+langBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+        const lang = this.getAttribute('data-lang');
+        langBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        
+        if(lang === 'mr') {
+            document.querySelectorAll('.hero h1').forEach(el => {
+                el.innerHTML = 'यशाच्या दिशेने <span style="color: #fbbf24;">सुवर्ण पाऊल</span>';
+            });
+        } else {
+            document.querySelectorAll('.hero h1').forEach(el => {
+                el.innerHTML = 'Golden Step <span style="color: #fbbf24;">Towards Success</span>';
+            });
+        }
     });
 });
 
-// ========== REGISTRATION FORM ==========
-const registrationForm = document.getElementById('registrationForm');
-if (registrationForm) {
-    registrationForm.addEventListener('submit', (e) => {
-        e.preventDefault();
+// ========== COUNTER ANIMATION ==========
+function startCounters() {
+    const counters = document.querySelectorAll('.counter-number');
+    if(counters.length === 0) return;
+    
+    counters.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-count'));
+        let count = 0;
+        const increment = target / 50;
         
-        // Get form data
-        const name = document.getElementById('regName').value;
-        const phone = document.getElementById('regPhone').value;
-        const studentClass = document.getElementById('regClass').value;
-        const medium = document.getElementById('regMedium').value;
-        
-        // Show success message
-        alert(`✅ Registration Successful!\n\nName: ${name}\nMobile: ${phone}\nClass: ${studentClass}\nMedium: ${medium}\n\nWe will contact you within 24 hours. Thank you!`);
-        
-        // Reset form
-        e.target.reset();
-    });
-}
-
-// ========== LOGIN SYSTEM ==========
-let loggedIn = false;
-const loginForm = document.getElementById('loginForm');
-const dashboardInfo = document.getElementById('dashboardInfo');
-const feeDetails = document.getElementById('feeDetails');
-const marksList = document.getElementById('marksList');
-let marksChart = null;
-
-if (loginForm) {
-    loginForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const id = document.getElementById('loginId').value;
-        const password = document.getElementById('loginPassword').value;
-        
-        if (id && password) {
-            loggedIn = true;
-            
-            // Show dashboard info
-            document.getElementById('displayName').innerText = id;
-            document.getElementById('displayId').innerText = "STU" + Math.floor(1000 + Math.random() * 9000);
-            dashboardInfo.style.display = 'block';
-            loginForm.style.display = 'none';
-            
-            // Update fee details
-            feeDetails.innerHTML = "<p>✅ Fee Paid: ₹0 pending. Next installment: 15th April 2025</p>";
-            
-            // Update marks list
-            marksList.innerHTML = "<p>📊 Math: 85/100 | Science: 78/100 | English: 92/100</p>";
-            
-            // Create or update chart
-            const ctx = document.getElementById('marksChart').getContext('2d');
-            if (marksChart) {
-                marksChart.destroy();
+        const updateCounter = () => {
+            count += increment;
+            if(count < target) {
+                counter.innerText = Math.floor(count);
+                requestAnimationFrame(updateCounter);
+            } else {
+                counter.innerText = target;
             }
-            marksChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Math', 'Science', 'English'],
-                    datasets: [{
-                        label: 'Marks',
-                        data: [85, 78, 92],
-                        backgroundColor: '#2563eb',
-                        borderRadius: 10
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                        }
-                    }
-                }
-            });
-        } else {
-            alert('Please enter Student ID and Password');
-        }
+        };
+        updateCounter();
     });
 }
 
-// Logout functionality
-const logoutBtn = document.getElementById('logoutBtn');
-if (logoutBtn) {
-    logoutBtn.addEventListener('click', () => {
-        loggedIn = false;
-        dashboardInfo.style.display = 'none';
-        loginForm.style.display = 'block';
-        loginForm.reset();
-        feeDetails.innerHTML = "Please login to view fee status";
-        marksList.innerHTML = "";
-        if (marksChart) {
-            marksChart.destroy();
-            marksChart = null;
+// ========== REGISTRATION FORM FUNCTIONS ==========
+window.currentStep = 1;
+
+window.showStep = function(step) {
+    const step1 = document.getElementById('step1Section');
+    const step2 = document.getElementById('step2Section');
+    const step3 = document.getElementById('step3Section');
+    
+    if(step1) step1.style.display = 'none';
+    if(step2) step2.style.display = 'none';
+    if(step3) step3.style.display = 'none';
+    
+    if(step === 1 && step1) step1.style.display = 'block';
+    if(step === 2 && step2) step2.style.display = 'block';
+    if(step === 3 && step3) step3.style.display = 'block';
+    
+    // Update progress steps styling
+    document.querySelectorAll('.step').forEach((el, idx) => {
+        el.classList.remove('active', 'completed');
+        if(idx + 1 === step) {
+            el.classList.add('active');
+        } else if(idx + 1 < step) {
+            el.classList.add('completed');
         }
     });
-}
+    
+    window.currentStep = step;
+    window.scrollTo({top: 0, behavior: 'smooth'});
+};
 
-// ========== LANGUAGE SWITCHER (English & Marathi) ==========
-const translations = {
-    en: {
-        hero_title: "Step Towards Success",
-        hero_sub: "Sasane Sir (9881296727) | Shinde Sir (9075238958)",
-        hero_medium: "CBSE | English | Semi | Marathi | 5th to 10th All Mediums",
-        btn_register: "Online Registration",
-        btn_dashboard: "Student Dashboard",
-        features_title: "Our Features",
-        feat1_title: "10+ Years Experience",
-        feat1_desc: "Decades of experience in education",
-        feat2_title: "Excellent Results",
-        feat2_desc: "90%+ students in merit every year",
-        feat3_title: "Personal Attention",
-        feat3_desc: "Limited batches, focus on each student",
-        feat4_title: "All Mediums",
-        feat4_desc: "CBSE, English, Semi, Marathi",
-        about_title: "About Us",
-        mission_title: "Our Mission",
-        mission_desc: "To help every student reach their maximum potential. Providing quality education that lasts a lifetime.",
-        vision_title: "Our Vision",
-        vision_desc: "To make education simple, effective and result-oriented. Helping every student achieve success.",
-        values_title: "Our Values",
-        values_desc: "Dedication, Integrity, Excellence. We prioritize students' future.",
-        teachers_title: "Our Expert Teachers",
-        courses_title: "Our Courses",
-        course1: "5th - 8th Foundation",
-        course1_desc: "Strong foundation, concept clarity, regular tests",
-        course2: "9th - 10th Board Prep",
-        course2_desc: "Complete syllabus, revision, mock tests, previous papers",
-        course3: "Competitive Exams",
-        course3_desc: "JEE/NEET Foundation, Olympiad, MHT-CET",
-        course4: "Online Classes",
-        course4_desc: "Live Zoom classes, recorded videos, doubt support",
-        enroll_now: "Enroll Now",
-        dashboard_title: "Student Dashboard",
-        tab_login: "Login",
-        tab_fees: "Fee Status",
-        tab_results: "Test Results",
-        tab_material: "Study Material",
-        fee_title: "Fee Details",
-        results_title: "Test Results",
-        material_title: "Study Material",
-        reg_title: "Online Registration",
-        contact_title: "Contact Us"
-    },
-    mr: {
-        hero_title: "सफलता की ओर सुनहरा कदम",
-        hero_sub: "ससाणे सर (9881296727) | शिंदे सर (9075238958)",
-        hero_medium: "CBSE | English | Semi | Marathi | 5वी ते 10वी सर्व माध्यम",
-        btn_register: "ऑनलाइन रजिस्ट्रेशन",
-        btn_dashboard: "विद्यार्थी डॅशबोर्ड",
-        features_title: "आमची वैशिष्ट्ये",
-        feat1_title: "१०+ वर्षे अनुभव",
-        feat1_desc: "शिक्षण क्षेत्रात दशकांचा अनुभव",
-        feat2_title: "उत्कृष्ट परिणाम",
-        feat2_desc: "दरवर्षी ९०%+ विद्यार्थी मेरिटमध्ये",
-        feat3_title: "वैयक्तिक लक्ष",
-        feat3_desc: "मर्यादित बॅच, प्रत्येक विद्यार्थ्यावर लक्ष",
-        feat4_title: "सर्व माध्यम",
-        feat4_desc: "CBSE, English, Semi, Marathi",
-        about_title: "आमच्याबद्दल",
-        mission_title: "आमचे ध्येय",
-        mission_desc: "प्रत्येक विद्यार्थ्याला त्याच्या कमाल क्षमतेपर्यंत पोहोचवणे. आयुष्यभर उपयोगी पडेल असे दर्जेदार शिक्षण देणे.",
-        vision_title: "आमची दृष्टी",
-        vision_desc: "शिक्षण सोपे, प्रभावी आणि परिणाम-केंद्रित बनवणे. प्रत्येक विद्यार्थ्याला यशाच्या शिखरावर पोहोचवणे.",
-        values_title: "आमची मूल्ये",
-        values_desc: "समर्पण, प्रामाणिकपणा, उत्कृष्टता. आम्ही विद्यार्थ्यांच्या भविष्याला प्राधान्य देतो.",
-        teachers_title: "आमचे तज्ज्ञ शिक्षक",
-        courses_title: "आमचे अभ्यासक्रम",
-        course1: "५वी - ८वी फाउंडेशन",
-        course1_desc: "मजबूत पाया, संकल्पना स्पष्टता, नियमित चाचण्या",
-        course2: "९वी - १०वी बोर्ड तयारी",
-        course2_desc: "संपूर्ण अभ्यासक्रम, पुनरावृत्ती, मॉक टेस्ट, मागील पेपर",
-        course3: "स्पर्धा परीक्षा",
-        course3_desc: "JEE/NEET फाउंडेशन, ऑलिम्पियाड, MHT-CET",
-        course4: "ऑनलाइन वर्ग",
-        course4_desc: "लाइव्ह Zoom वर्ग, रेकॉर्डेड व्हिडिओ, शंका समाधान",
-        enroll_now: "आता प्रवेश घ्या",
-        dashboard_title: "विद्यार्थी डॅशबोर्ड",
-        tab_login: "लॉगिन",
-        tab_fees: "फी स्टेटस",
-        tab_results: "चाचणी निकाल",
-        tab_material: "अभ्यास साहित्य",
-        fee_title: "फी तपशील",
-        results_title: "चाचणी निकाल",
-        material_title: "अभ्यास साहित्य",
-        reg_title: "ऑनलाइन रजिस्ट्रेशन",
-        contact_title: "संपर्क करा"
+window.nextStep = function(step) {
+    if(step === 1 && window.validateStep1()) {
+        window.showStep(2);
+    } 
+    else if(step === 2 && window.validateStep2()) {
+        window.showStep(3);
+    }
+    else if(step === 1 && !window.validateStep1()) {
+        alert('कृपया सभी आवश्यक जानकारी भरें!');
+    }
+    else if(step === 2 && !window.validateStep2()) {
+        alert('कृपया सभी शैक्षणिक जानकारी भरें!');
     }
 };
 
-let currentLang = 'en';
+window.prevStep = function(step) {
+    if(step === 2) window.showStep(1);
+    if(step === 3) window.showStep(2);
+};
 
-function updateLanguage(lang) {
-    document.querySelectorAll('[data-key]').forEach(el => {
-        const key = el.getAttribute('data-key');
-        if (translations[lang][key]) {
-            el.innerText = translations[lang][key];
-        }
+window.validateStep1 = function() {
+    let valid = true;
+    let name = document.getElementById('fullName')?.value.trim() || '';
+    let mobile = document.getElementById('mobileNumber')?.value.trim() || '';
+    let gender = document.getElementById('gender')?.value || '';
+    let parent = document.getElementById('parentName')?.value.trim() || '';
+    
+    if(name.length < 3) {
+        if(document.getElementById('nameError')) document.getElementById('nameError').innerText = 'नाम कम से कम 3 अक्षर का होना चाहिए';
+        if(document.getElementById('fullName')) document.getElementById('fullName').style.borderColor = '#ef4444';
+        valid = false;
+    } else {
+        if(document.getElementById('nameError')) document.getElementById('nameError').innerText = '';
+        if(document.getElementById('fullName')) document.getElementById('fullName').style.borderColor = '#e2e8f0';
+    }
+    
+    if(!mobile) {
+        if(document.getElementById('mobileError')) document.getElementById('mobileError').innerText = 'मोबाइल नंबर आवश्यक है';
+        if(document.getElementById('mobileNumber')) document.getElementById('mobileNumber').style.borderColor = '#ef4444';
+        valid = false;
+    } else if(!isValidMobile(mobile)) {
+        if(document.getElementById('mobileError')) document.getElementById('mobileError').innerText = 'कृपया सही 10 अंकों का मोबाइल नंबर डालें';
+        if(document.getElementById('mobileNumber')) document.getElementById('mobileNumber').style.borderColor = '#ef4444';
+        valid = false;
+    } else {
+        if(document.getElementById('mobileError')) document.getElementById('mobileError').innerText = '';
+        if(document.getElementById('mobileNumber')) document.getElementById('mobileNumber').style.borderColor = '#e2e8f0';
+        let cleanMobile = getCleanMobile(mobile);
+        document.getElementById('mobileNumber').value = cleanMobile;
+    }
+    
+    if(!gender) {
+        if(document.getElementById('genderError')) document.getElementById('genderError').innerText = 'लिंग का चयन करें';
+        if(document.getElementById('gender')) document.getElementById('gender').style.borderColor = '#ef4444';
+        valid = false;
+    } else {
+        if(document.getElementById('genderError')) document.getElementById('genderError').innerText = '';
+        if(document.getElementById('gender')) document.getElementById('gender').style.borderColor = '#e2e8f0';
+    }
+    
+    if(parent.length < 2) {
+        if(document.getElementById('parentError')) document.getElementById('parentError').innerText = 'अभिभावक का नाम आवश्यक है';
+        if(document.getElementById('parentName')) document.getElementById('parentName').style.borderColor = '#ef4444';
+        valid = false;
+    } else {
+        if(document.getElementById('parentError')) document.getElementById('parentError').innerText = '';
+        if(document.getElementById('parentName')) document.getElementById('parentName').style.borderColor = '#e2e8f0';
+    }
+    
+    return valid;
+};
+
+window.validateStep2 = function() {
+    let valid = true;
+    let classVal = document.getElementById('currentClass')?.value || '';
+    let medium = document.getElementById('medium')?.value || '';
+    let subjects = document.querySelectorAll('.subject:checked');
+    
+    if(!classVal) {
+        if(document.getElementById('classError')) document.getElementById('classError').innerText = 'कक्षा का चयन करें';
+        if(document.getElementById('currentClass')) document.getElementById('currentClass').style.borderColor = '#ef4444';
+        valid = false;
+    } else {
+        if(document.getElementById('classError')) document.getElementById('classError').innerText = '';
+        if(document.getElementById('currentClass')) document.getElementById('currentClass').style.borderColor = '#e2e8f0';
+    }
+    
+    if(!medium) {
+        if(document.getElementById('mediumError')) document.getElementById('mediumError').innerText = 'माध्यम का चयन करें';
+        if(document.getElementById('medium')) document.getElementById('medium').style.borderColor = '#ef4444';
+        valid = false;
+    } else {
+        if(document.getElementById('mediumError')) document.getElementById('mediumError').innerText = '';
+        if(document.getElementById('medium')) document.getElementById('medium').style.borderColor = '#e2e8f0';
+    }
+    
+    if(subjects.length === 0) {
+        if(document.getElementById('subjectsError')) document.getElementById('subjectsError').innerText = 'कम से कम एक विषय का चयन करें';
+        valid = false;
+    } else {
+        if(document.getElementById('subjectsError')) document.getElementById('subjectsError').innerText = '';
+    }
+    
+    return valid;
+};
+
+window.validateStep3 = function() {
+    let valid = true;
+    let batch = document.getElementById('batch')?.value || '';
+    
+    if(!batch) {
+        if(document.getElementById('batchError')) document.getElementById('batchError').innerText = 'बैच का चयन करें';
+        if(document.getElementById('batch')) document.getElementById('batch').style.borderColor = '#ef4444';
+        valid = false;
+    } else {
+        if(document.getElementById('batchError')) document.getElementById('batchError').innerText = '';
+        if(document.getElementById('batch')) document.getElementById('batch').style.borderColor = '#e2e8f0';
+    }
+    
+    return valid;
+};
+
+window.submitRegistration = function() {
+    if(!window.validateStep3()) {
+        alert('कृपया बैच का चयन करें!');
+        return;
+    }
+    
+    let name = document.getElementById('fullName')?.value || '';
+    let mobile = document.getElementById('mobileNumber')?.value || '';
+    let classVal = document.getElementById('currentClass')?.value || '';
+    let batch = document.getElementById('batch')?.value || '';
+    let regId = 'SNC' + new Date().getFullYear() + Math.floor(Math.random() * 10000);
+    
+    let selectedSubjects = [];
+    document.querySelectorAll('.subject:checked').forEach(sub => {
+        selectedSubjects.push(sub.value);
     });
     
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-        if (btn.getAttribute('data-lang') === lang) {
-            btn.classList.add('active');
-        } else {
-            btn.classList.remove('active');
-        }
+    let message = `✅ Registration Successful!\n\nRegistration ID: ${regId}\nName: ${name}\nMobile: ${mobile}\nClass: ${classVal}\nBatch: ${batch}\nSubjects: ${selectedSubjects.join(', ')}\n\nWe will contact you soon.`;
+    alert(message);
+    
+    let whatsappMsg = `Hi ${name},\n\nThank you for registering!\n\nReg ID: ${regId}\nClass: ${classVal}\nBatch: ${batch}\n\nTeam श्रीनाथ चाणक्य\n📞 9881296727`;
+    window.open(`https://wa.me/${mobile}?text=${encodeURIComponent(whatsappMsg)}`, '_blank');
+    
+    // Reset form
+    const fields = ['fullName', 'mobileNumber', 'whatsapp', 'gender', 'dob', 'email', 'parentName', 'address', 'currentClass', 'schoolName', 'medium', 'percentage', 'batch', 'mode', 'heardFrom', 'notes'];
+    fields.forEach(id => {
+        if(document.getElementById(id)) document.getElementById(id).value = '';
+    });
+    document.querySelectorAll('.subject').forEach(cb => cb.checked = false);
+    if(document.getElementById('competitiveExam')) document.getElementById('competitiveExam').value = 'Not Interested';
+    if(document.getElementById('mode')) document.getElementById('mode').value = 'Offline (Classroom)';
+    if(document.getElementById('heardFrom')) document.getElementById('heardFrom').value = 'Select';
+    
+    document.querySelectorAll('input, select, textarea').forEach(el => {
+        el.style.borderColor = '#e2e8f0';
     });
     
-    currentLang = lang;
-}
+    window.showStep(1);
+    window.scrollTo({top: 0, behavior: 'smooth'});
+};
 
-// Add language switcher event listeners
-document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        const lang = btn.getAttribute('data-lang');
-        updateLanguage(lang);
-    });
-});
-
-// Initialize English language
-updateLanguage('en');
-
-// ========== CLOSE MOBILE MENU ON LINK CLICK ==========
-document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => {
-        navLinks.classList.remove('active');
-    });
-});
-
-// ========== SMOOTH SCROLL FOR ANCHOR LINKS ==========
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        const href = this.getAttribute('href');
-        if (href === "#" || href === "") return;
-        const target = document.querySelector(href);
-        if (target) {
-            e.preventDefault();
-            target.scrollIntoView({ behavior: 'smooth' });
-        }
-    });
-});
-
-// ========== WELCOME MESSAGE ON PAGE LOAD ==========
-window.addEventListener('load', () => {
-    console.log('Website Loaded Successfully!');
-});
+// ========== INITIALIZE ==========
+loadAllPages();
